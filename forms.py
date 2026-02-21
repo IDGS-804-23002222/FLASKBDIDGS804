@@ -34,3 +34,10 @@ class UserForm(Form):
             Email(message="Ingrese un correo válido")
         ]
     )
+    
+    telefono = StringField(
+        "Telefono",
+        [
+            DataRequired(message="El telefono es obligatorio")
+        ]
+    )
