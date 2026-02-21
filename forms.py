@@ -7,8 +7,7 @@ class UserForm(Form):
     matricula = IntegerField(
         "Matrícula",
         [
-            DataRequired(message="La matrícula es obligatoria"),
-            NumberRange(min=1, max=10, message="La matrícula debe ser válida")
+            DataRequired(message="La matrícula es obligatoria")
         ]
     )
 
