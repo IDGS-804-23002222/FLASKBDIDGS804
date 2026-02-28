@@ -10,7 +10,7 @@ from maestros.routes import maestros
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
-app.register_blueprint(maestros) #registrar el blueprint de maestros
+app.register_blueprint(maestros, url_prefix="/maestros") #registrar el blueprint de maestros
 # app.register blueprint(alumnos)
 db.init_app(app)
 migrate=Migrate(app, db) #migracion a db

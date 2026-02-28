@@ -13,11 +13,14 @@ class Alumnos(db.Model):
     telefono = db.Column(db.String(10))
     create_date = db.Column(db.DateTime,
                             default=datetime.datetime.now)
-    
+   
 class Maestros(db.Model):
     __tablename__ = 'maestros'
-    matricula = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    matricula = db.Column(db.Integer, unique=True)
     nombre = db.Column(db.String(50))
-    apellidos = db.Column(db.String(50))
+    apellido = db.Column(db.String(50))
     especialidad = db.Column(db.String(50))
-    email = db.Column(db.String(50))
+    correo = db.Column(db.String(50))
+    cursos = db.relationship('Curso', back_populates='maestro')
+ 

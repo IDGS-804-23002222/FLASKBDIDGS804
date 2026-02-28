@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block container %}
+
+<div class="relative bg-neutral-primary-soft max-w-xs w-full p-6 border border-default rounded-base shadow-xs mx-auto">
+
+    <div class="flex flex-col items-center">
+
+        <div class="w-24 h-24 mb-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-3xl font-bold">
+            {{ nombre[0] }}{{ apellido[0] }}
+        </div>
+
+        <h5 class="mb-0.5 text-xl font-semibold tracking-tight text-heading">
+            {{ nombre }} {{ apellido }}
+        </h5>
+
+        <span class="text-sm text-body">
+            {{ correo }}
+        </span>
+
+         <span class="text-sm text-body">
+            {{ matricula }}
+        </span>
+
+          <span class="text-sm text-body">
+            {{ especialidad }}
+        </span>
+
+        <div class="flex mt-4 gap-4">
+            <a href="/maestros"
+               class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-xs font-medium rounded-base text-sm px-4 py-2.5">
+               Volver
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
