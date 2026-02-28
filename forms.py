@@ -41,3 +41,10 @@ class UserForm(Form):
             DataRequired(message="El telefono es obligatorio")
         ]
     )
+    
+    especialidad = StringField(
+        "Especialidad",
+        [
+            DataRequired(message="La especialidad es obligatoria")
+        ]
+    )

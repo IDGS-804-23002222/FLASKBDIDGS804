@@ -5,9 +5,13 @@ from flask_migrate import Migrate #referencia de migrate
 from flask import g
 import forms
 from models import db, Alumnos
+from maestros.routes import maestros
+#from alumnos.routes import alumnos
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
+app.register_blueprint(maestros) #registrar el blueprint de maestros
+# app.register blueprint(alumnos)
 db.init_app(app)
 migrate=Migrate(app, db) #migracion a db
 #csrf = CSRFProtect()
