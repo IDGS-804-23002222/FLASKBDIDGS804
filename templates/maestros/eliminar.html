@@ -2,40 +2,36 @@
 {% extends 'layout.html' %}
 {% block container %}
 {% import "_macros.html" as macros %}
+<form method="POST" class="w-xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg" novalidate>
+  {{ macros.campo(form.matricula, class="block") }}
+  {{ macros.campo(form.nombre, class="block") }}
+  {{ macros.campo(form.apellido, class="block") }}
+  {{ macros.campo(form.correo, class="block") }}
+  {{ macros.campo(form.especialidad, class="block") }}
 
-<form method="POST" action="" class="max-w-md mx-auto">
-  <div class="relative z-0 w-full mb-5 group">
-      {{ macros.camposNuevos(form.matricula, class="peer block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand", placeholder=" ") }}
-      <label for="floating_matricula" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Matrícula</label>
+  <div class="flex justify-end gap-4 mt-6">
+    <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 
+           bg-gradient-to-r from-gray-500 to-gray-700 
+           hover:from-gray-600 hover:to-gray-800
+           text-white font-medium rounded-lg 
+           shadow-md hover:shadow-lg
+           transform hover:-translate-y-0.5
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-gray-400">
+      Eliminar Maestro
+    </button>
+
+    <a href="{{ url_for('maestros.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5
+            bg-red-700 hover:bg-red-600
+            text-white font-medium rounded-lg
+            shadow-md hover:shadow-lg
+            transform hover:-translate-y-0.5
+            transition-all duration-200
+            focus:outline-none focus:ring-2 focus:ring-gray-400">
+
+      Volver al listado
+    </a>
   </div>
-  <div class="relative z-0 w-full mb-5 group">
-      {{ macros.camposNuevos(form.nombre, class="peer block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand", placeholder=" ") }}
-        <label for="floating_nombre" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Nombre</label>
-  </div>
-  <div class="relative z-0 w-full mb-5 group">
-      {{ macros.camposNuevos(form.apellido, class="peer block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand", placeholder=" ") }}
-        <label for="floating_apellido" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Apellido</label>
-  </div>
-  <div class="grid md:grid-cols-2 md:gap-6">
-    <div class="relative z-0 w-full mb-5 group">
-        {{ macros.camposNuevos(form.correo, class="peer block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand", placeholder=" ") }}
-        <label for="floating_correo" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Correo</label>
-    </div>
-      <div class="relative z-0 w-full mb-5 group">
-        {{ macros.camposNuevos(form.especialidad, class="peer block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand", placeholder=" ") }}
-        <label for="floating_especialidad" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Especialidad</label>
-    </div>
-  </div>
-  <div class="grid md:grid-cols-2 md:gap-6">
-<button type="submit"
-  class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none transition">
-  Eliminar
-</button>
-            <a href="/maestros"
-               class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-xs font-medium rounded-base text-sm px-4 py-2.5">
-               Volver
-            </a>
-        </div>
 </form>
-
+</div>
 {% endblock %}

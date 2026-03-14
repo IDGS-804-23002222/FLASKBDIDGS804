@@ -1,46 +1,47 @@
 from . import maestros
 
 from flask import Flask, render_template, request, redirect, url_for, flash
-from config import DevelopmentConfig
-from flask import g
 import forms
-from maestros.routes import maestros
-from flask_migrate import Migrate #referencia de migrate
-from models import Maestros, db
+from models import Maestros, Alumnos, Cursos, db
 # todo lo referente a la carpeta de maestros empieza con 'maestros' segun lo definido en el modulo con blueprint
-@maestros.route('/perfil/<nombre>')
-def perfil(nombre):
-    return f"Perfil de {nombre}"
 
-@maestros.route('/', methods=['GET','POST'])
-@maestros.route('/index')
+@maestros.route('/')
 def index():
-    create_form = forms.MaestrosForm(request.form)
+    form = forms.MaestrosForm(request.form)
     maestros = Maestros.query.all()
       
-    return render_template('maestros/listadoMaes.html', form=create_form, maestros=maestros)
+    return render_template('maestros/listadoMaes.html', form=form, maestros=maestros)
 
 @maestros.route('/registrar', methods=['GET', 'POST'])
 def registrar():
-    create_form = forms.MaestrosForm(request.form)
+    form = forms.MaestrosForm(request.form)
 
-    if request.method == "POST" and create_form.validate():
+    if request.method == "POST" and form.validate():
+        
+        maestro_existente = Maestros.query.filter.by(matricula=form.matricula.data).first()
+        
+        if maestro_existente:
+            flash("La matrícula ya está registrada.", "danger")
+            return render_template("maestros/registrar.html", form=form)
+
         maes = Maestros(
-            matricula=create_form.matricula.data,
-            nombre=create_form.nombre.data,
-            apellido=create_form.apellido.data,
-            especialidad=create_form.especialidad.data,
-            correo=create_form.correo.data
+            matricula=form.matricula.data,
+            nombre=form.nombre.data,
+            apellido=form.apellido.data,
+            especialidad=form.especialidad.data,
+            correo=form.correo.data
         )
+        
         db.session.add(maes)
         db.session.commit()
+        
+        flash('¡Maestro registrado exitosamente!', 'success')
         return redirect(url_for("maestros.index"))
 
-    return render_template("maestros/registrar.html", form=create_form)
+    return render_template("maestros/registrar.html", form=form)
 
 @maestros.route("/detalles", methods=["GET", "POST"])
 def detalles():
-    create_form = forms.MaestrosForm(request.form)
     if request.method == "GET":
         id = request.args.get("id")
         maes1 = db.session.query(Maestros).filter(Maestros.id == id).first()
@@ -55,49 +56,46 @@ def detalles():
 
 @maestros.route("/modificar", methods=["GET", "POST"])
 def modificar():
-    create_form = forms.MaestrosForm(request.form)
+    form = forms.MaestrosForm(request.form)
     id = request.args.get("id")
     maes1 = db.session.query(Maestros).filter(Maestros.id == id).first()
     if request.method == "GET":
-        create_form.matricula.data=maes1.matricula
-        create_form.nombre.data = maes1.nombre
-        create_form.apellido.data = maes1.apellido
-        create_form.especialidad.data = maes1.especialidad
-        create_form.correo.data=maes1.correo
+        form.matricula.data=maes1.matricula
+        form.nombre.data = maes1.nombre
+        form.apellido.data = maes1.apellido
+        form.especialidad.data = maes1.especialidad
+        form.correo.data=maes1.correo
 
     if request.method == "POST":
         maes1.id=id
-        maes1.matricula=create_form.matricula.data
-        maes1.nombre=create_form.nombre.data
-        maes1.apellido=create_form.apellido.data
-        maes1.especialidad=create_form.especialidad.data
-        maes1.correo=create_form.correo.data
+        maes1.matricula=form.matricula.data
+        maes1.nombre=form.nombre.data
+        maes1.apellido=form.apellido.data
+        maes1.especialidad=form.especialidad.data
+        maes1.correo=form.correo.data
         db.session.add(maes1)
         db.session.commit()
+        flash('¡Maestro modificado exitosamente!', 'success')
         return redirect(url_for("maestros.index"))
 
-    return render_template("maestros/modificar.html", form=create_form)
+    return render_template("maestros/modificar.html", form=form)
 
 @maestros.route("/eliminar", methods=["GET", "POST"])
 def eliminar():
-    create_form = forms.MaestrosForm(request.form)
+    form = forms.MaestrosForm(request.form)
     id = request.args.get("id")
     maes1 = db.session.query(Maestros).filter(Maestros.id == id).first()
     if request.method == "GET":
-        create_form.matricula.data=maes1.matricula
-        create_form.nombre.data = maes1.nombre
-        create_form.apellido.data = maes1.apellido
-        create_form.especialidad.data = maes1.especialidad
-        create_form.correo.data=maes1.correo
+        form.matricula.data=maes1.matricula
+        form.nombre.data = maes1.nombre
+        form.apellido.data = maes1.apellido
+        form.especialidad.data = maes1.especialidad
+        form.correo.data=maes1.correo
 
     if request.method == "POST":
         db.session.delete(maes1)
         db.session.commit()
+        flash('¡Maestro eliminado exitosamente!', 'success')
         return redirect(url_for("maestros.index"))
 
-    return render_template("maestros/eliminar.html", form=create_form)
-
-
-
-
-
+    return render_template("maestros/eliminar.html", form=form)

@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+
+{% block container %}
+
+<div class="flex justify-center items-center min-h-[70vh]">
+
+<div class="w-4xl bg-gray-900/90 backdrop-blur-md 
+border border-gray-700 rounded-2xl 
+shadow-xl p-8 transition hover:shadow-2xl">
+
+<h1 class="text-2xl md:text-3xl font-bold text-center text-white mb-6">
+Consulta de Inscripciones
+</h1>
+
+
+<form method="GET" action="{{ url_for('cursos.listadoInscritos') }}" 
+class="flex flex-wrap gap-4 mb-6 justify-center">
+
+<select name="alumno_id" class="px-4 py-2 border rounded-lg bg-gray-800 text-white">
+<option value="">Alumno</option>
+{% for a in alumnos_all %}
+<option value="{{ a.id }}">{{ a.nombre }} {{ a.apellido }}</option>
+{% endfor %}
+</select>
+
+<select name="maestro_id" class="px-4 py-2 border rounded-lg bg-gray-800 text-white">
+<option value="">Docente</option>
+{% for m in maestros %}
+<option value="{{ m.id }}">{{ m.nombre }} {{ m.apellido }}</option>
+{% endfor %}
+</select>
+
+<select name="curso_id" class="px-4 py-2 border rounded-lg bg-gray-800 text-white">
+<option value="">Curso</option>
+{% for c in cursos_all %}
+<option value="{{ c.id }}">{{ c.nombre }}</option>
+{% endfor %}
+</select>
+
+<button class="px-5 py-2 bg-blue-600 hover:bg-blue-700 
+text-white rounded-lg shadow-md transition">
+Buscar
+</button>
+
+  <a href="{{ url_for('cursos.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5
+            bg-red-700 hover:bg-red-600
+            text-white font-medium rounded-lg
+            shadow-md hover:shadow-lg
+            transform hover:-translate-y-0.5
+            transition-all duration-200
+            focus:outline-none focus:ring-2 focus:ring-gray-400">
+
+                    Volver a cursos
+                </a>
+
+</form>
+
+<div class="overflow-x-auto shadow-lg rounded-xl border border-gray-700">
+
+<table class="min-w-full bg-gray-800">
+
+<thead class="bg-gray-700 text-white">
+<tr>
+
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase">
+Curso
+</th>
+
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase">
+Docente
+</th>
+
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase">
+Alumnos Inscritos
+</th>
+
+</tr>
+</thead>
+
+<tbody>
+
+{% for curso in cursos %}
+<tr class="border-b border-gray-700 hover:bg-gray-700/40 transition">
+
+<td class="px-6 py-4 text-white">
+{{ curso.nombre }}
+</td>
+
+<td class="px-6 py-4 text-white">
+{{ curso.maestro.nombre }} {{ curso.maestro.apellido }}
+</td>
+
+<td class="px-6 py-4 text-white">
+
+{% if curso.alumnos %}
+{% for alumno in curso.alumnos %}
+• {{ alumno.nombre }} {{ alumno.apellido }} <br>
+{% endfor %}
+{% else %}
+<span class="text-gray-400">Sin alumnos</span>
+{% endif %}
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+<td colspan="3" class="text-center p-6 text-gray-300">
+No hay resultados con los filtros seleccionados
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+</div>
+
+{% endblock %}

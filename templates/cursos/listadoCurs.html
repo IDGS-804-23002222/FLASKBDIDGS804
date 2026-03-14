@@ -5,11 +5,11 @@
 <div class="container mx-auto px-4 py-8 md:py-12">
     <div class="flex flex-col sm:flex-row justify-between items-end sm:items-center mb-8 gap-4">
         <h1 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100">
-            Listado de Maestros
+            Listado de Cursos
         </h1>
         
 <div class="flex justify-end gap-4 mt-6">
-    <a href="{{ url_for('maestros.registrar') }}" class="inline-flex items-center gap-2 px-5 py-2.5 
+    <a href="{{ url_for('cursos.registrar') }}" class="inline-flex items-center gap-2 px-5 py-2.5 
            bg-gradient-to-r from-green-500 to-emerald-600 
            hover:from-green-600 hover:to-emerald-700
            text-white font-medium rounded-lg 
@@ -18,8 +18,20 @@
            transition-all duration-200
            focus:outline-none focus:ring-2 focus:ring-green-400">
 
-      Nuevo Maestro
+      Nuevo Curso
     </a>
+
+    <a href="{{ url_for('cursos.listadoInscritos') }}" class="inline-flex items-center gap-2 px-5 py-2.5
+            bg-blue-700 hover:bg-blue-600
+            text-white font-medium rounded-lg
+            shadow-md hover:shadow-lg
+            transform hover:-translate-y-0.5
+            transition-all duration-200
+            focus:outline-none focus:ring-2 focus:ring-gray-400">
+
+      Consultar inscripciones
+    </a>
+
 
     <a href="{{ url_for('index') }}" class="inline-flex items-center gap-2 px-5 py-2.5
             bg-red-700 hover:bg-red-600
@@ -39,65 +51,50 @@
             <thead class="bg-gray-50 dark:bg-gray-700">
                 <tr>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:text-gray-300">
-                        Nombre
-                    </th>
+                    Nombre
+</th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:text-gray-300">
-                        Apellido
-                    </th>
+                        Descripción
+                </th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:text-gray-300">
-                        Correo
+                        Maestro
                     </th>
-                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:text-gray-300">
-                        Matrícula
-                    </th>
-                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:text-gray-300">
-                        Especialidad
-                    </th>
-                    <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider dark:text-gray-300">
+                          <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider dark:text-gray-300">
                         Acciones
                     </th>
                 </tr>
             </thead>
-
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                {% if maestros %}
-                    {% for maes in maestros %}
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150">
+  <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+    {% if cursos %}                 
+    {%for curs in cursos%}
+  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150">
                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            {{ maes.nombre }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">
-                            {{ maes.apellido }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">
-                            {{ maes.correo }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400 font-mono">
-                            {{ maes.matricula }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">
-                            {{ maes.especialidad or '—' }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                  {{ curs.nombre }}
+                </td>
+  <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  {{ curs.descripcion }}
+                </td>
+  <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  {{ curs.maestro.nombre }} {{ curs.maestro.apellido }}
+                </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                             <div class="flex items-center justify-center gap-3">
-                                <a href="{{ url_for('maestros.modificar', id=maes.id) }}"
-                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-md transition-colors duration-200 shadow-sm">
+                                <a href="modificar?id={{curs.id}}" 
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-md transition-colors duration-200 shadow-sm">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                     </svg>
                                     Editar
                                 </a>
 
-                                <a href="{{ url_for('maestros.detalles', id=maes.id) }}"
-                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md transition-colors duration-200 shadow-sm">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Detalles
-                                </a>
 
-                                <a href="{{ url_for('maestros.eliminar', id=maes.id) }}"
-                                   onclick="return confirma('¿Realmente deseas eliminar al maestro {{ maes.nombre }}?');"
+                               <a href="{{ url_for('cursos.inscritos', curso_id=curs.id, inscribir=1) }}"
+class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md transition-colors duration-200 shadow-sm">
+    Inscribir
+</a>
+
+                                <a href="eliminar?id={{curs.id}}" 
+                                   onclick="return confirma('¿Realmente deseas eliminar el curso {{ curs.nombre }}?');"
                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors duration-200 shadow-sm">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -115,8 +112,8 @@
                                 <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-4a2 2 0 00-2 2v2m-4-6H4" />
                                 </svg>
-                                <p class="text-lg font-medium">No hay maestros registrados aún</p>
-                                <a href="{{ url_for('maestros.registrar') }}" 
+                                <p class="text-lg font-medium">No hay cursos registrados aún</p>
+                                <a href="{{ url_for('cursos.registrar') }}" 
                                    class="mt-2 text-green-600 hover:text-green-700 font-medium">
                                     → Registrar el primero
                                 </a>

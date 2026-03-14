@@ -14,33 +14,36 @@
                   flex items-center justify-center 
                   text-white text-4xl font-bold
                   shadow-lg ring-4 ring-gray-800">
-            {{ nombre[0] }}{{ apellido[0] }}
-        </div>
-  </div>
+        {{ nombre[0] }}{{ apellido[0] }}
+      </div>
       <h2 class="text-2xl font-semibold text-white">
         {{ nombre }} {{ apellido }}
       </h2>
 
       <p class="text-gray-400 text-sm mb-6">
-        Perfil de Maestro
-       </p>
-         <div class="w-full space-y-3 text-left">
+        Perfil de Alumno
+      </p>
+     <div class="w-full space-y-3 text-left">
 
         <div class="flex justify-between border-b border-gray-700 pb-2">
           <span class="text-gray-400 text-sm">Correo</span>
           <span class="text-gray-200 text-sm font-medium">{{ correo }}</span>
         </div>
+
         <div class="flex justify-between border-b border-gray-700 pb-2">
           <span class="text-gray-400 text-sm">Matrícula</span>
           <span class="text-gray-200 text-sm font-medium">{{ matricula }}</span>
         </div>
+
         <div class="flex justify-between">
-          <span class="text-gray-400 text-sm">Especialidad</span>
-          <span class="text-gray-200 text-sm font-medium">{{ especialidad }}</span>
+          <span class="text-gray-400 text-sm">Teléfono</span>
+          <span class="text-gray-200 text-sm font-medium">{{ telefono }}</span>
         </div>
-        </div>
- <div class="mt-8 w-full">
-        <a href="{{ url_for('maestros.index') }}"
+
+      </div>
+
+      <div class="mt-8 w-full">
+        <a href="{{ url_for('alumnos.index') }}"
            class="w-full inline-flex justify-center items-center
                   px-5 py-2.5
                    bg-red-700 hover:bg-red-600

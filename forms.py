@@ -1,8 +1,8 @@
-from wtforms import Form, StringField, IntegerField, EmailField
+from wtforms import Form, StringField, IntegerField, EmailField, SelectField
 from wtforms.validators import DataRequired, Length, NumberRange, Email
 
 
-class UserForm(Form):
+class AlumnosForm(Form):
 
     matricula = IntegerField(
         "Matrícula",
@@ -78,5 +78,29 @@ class MaestrosForm(Form):
         "Especialidad",
         [
             DataRequired(message="La especialidad es obligatoria")
+        ]
+    )
+    
+class CursosForm(Form):
+    nombre = StringField(
+        "Nombre",
+        [
+            DataRequired(message="El nombre es obligatorio"),
+            Length(min=2, max=150, message="El nombre debe tener entre 2 y 150 caracteres")
+        ]
+    )
+
+    descripcion = StringField(
+        "Descripción",
+        [
+            DataRequired(message="La descripción es obligatoria")
+        ]
+    )
+    
+    maestro_id = SelectField(
+        "Maestro",
+        coerce=int,
+        validators=[
+            DataRequired(message="El maestro es obligatorio")
         ]
     )

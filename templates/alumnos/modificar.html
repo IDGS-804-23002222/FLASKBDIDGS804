@@ -1,14 +1,13 @@
-
 {% extends 'layout.html' %}
 {% block container %}
 {% import "_macros.html" as macros %}
 
 <form method="POST" class="w-xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg" novalidate>
-  {{ macros.campo(form.matricula, placeholder="Matrícula") }}
-  {{ macros.campo(form.nombre, placeholder="Nombre") }}
-  {{ macros.campo(form.apellido, placeholder="Apellido") }}
-  {{ macros.campo(form.correo, placeholder="Correo electrónico") }}
-  {{ macros.campo(form.especialidad, placeholder="Especialidad") }}
+  {{ macros.campo(form.matricula, placeholder="Ingresa matrícula") }}
+  {{ macros.campo(form.nombre) }}
+  {{ macros.campo(form.apellido) }}
+  {{ macros.campo(form.correo) }}
+  {{ macros.campo(form.telefono) }}
 
   <div class="flex justify-end gap-4 mt-6">
     <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 
@@ -23,7 +22,7 @@
       Guardar cambios
     </button>
 
-    <a href="{{ url_for('maestros.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5
+    <a href="{{ url_for('alumnos.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5
             bg-red-700 hover:bg-red-600
             text-white font-medium rounded-lg
             shadow-md hover:shadow-lg
@@ -31,7 +30,7 @@
             transition-all duration-200
             focus:outline-none focus:ring-2 focus:ring-gray-400">
 
-      Volver al listado
+      Volver a listado
     </a>
   </div>
 </form>
